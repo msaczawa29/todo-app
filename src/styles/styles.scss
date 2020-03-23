@@ -1,0 +1,69 @@
+$off-black: #88a4b4;
+$off-white:  #e9dccd;
+$blue: #465b5f;
+$light-blue: #536e74;
+$dark-blue: #394a4d;
+$purple: #738156;
+$turkus: #057389;
+$yellow:  #f7c73f;
+$peach: #d29681;
+$light-pink: #efcfd0;
+$off-white: #e3e9e5;
+
+$s-size: 1.2rem;
+$m-size: 1.6rem;
+$l-size: 3.2rem;
+$xl-size: 4.8rem;
+$desktop-breakpoint: 45rem;
+
+
+html {
+    font-size: 62.5%
+}
+body {
+    background: $peach;
+    font-family: Helvetica, Arial, Helvetica, sans-serif;
+    font-size: 1.6rem
+}
+
+.header {
+    color: $light-pink;
+    margin-bottom: $m-size;
+    padding: $m-size 0;
+  }
+  
+  .button {
+    background: $light-pink;
+    border: none;
+    border-bottom: 0.3rem solid darken($light-pink, 10%);
+    color: rgb(99, 98, 98);
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: .4 rem;
+  }
+
+
+  .header__title {
+    font-size: $l-size;
+    margin: 0;
+  }
+  
+  .header__subtitle {
+    color: $off-white;
+    font-size: $m-size;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  @media (min-width: $desktop-breakpoint) {
+    .header {
+      margin-bottom: $xl-size;
+    }
+  }
+  
+
+  .container {
+    max-width:  60rem;
+    margin: 0 auto;
+    padding: 0  $m-size;
+   }
