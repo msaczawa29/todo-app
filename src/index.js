@@ -7,12 +7,20 @@ class TodoApp extends React.Component {
     super(props);
     this.handleDeleteTodos = this.handleDeleteTodos.bind(this);
     this.handleAddOption = this.handleAddOption.bind(this);
+    this.handleDeleteTodo=this.handleDeleteTodo.bind(this)
     this.state = {
       todos: []
     };
   }
   handleDeleteTodos() {
     this.setState(() => ({ todos: [] }));
+  }
+  handleDeleteTodo(todoToRemove){
+this.setState((prevState)=>({
+    todos: prevState.todos.filter((todo)=>{
+        return todoToRemove !== todo
+    })
+}))
   }
 
   handleAddOption(todo) {
@@ -40,6 +48,7 @@ class TodoApp extends React.Component {
           todos={this.state.todos}
           hasTodos={this.state.todos.length > 0}
           handleDeleteTodos={this.handleDeleteTodos}
+          handleDeleteTodo={this.handleDeleteTodo}
         />
         <Filter />
       </div>
@@ -71,17 +80,13 @@ class AddOption extends React.Component {
     const todo = e.target.elements.todo.value.trim();
     const error = this.props.handleAddOption(todo);
 
-    this.setState(() => {
-      return {
-        error
-      };
-    });
+    this.setState(() => ({ error }));
   }
 
   render() {
     return (
       <div>
-      <div>{this.state.error&&<p>{this.state.error}</p>}</div>
+        <div>{this.state.error && <p>{this.state.error}</p>}</div>
         <form onSubmit={this.handleAddOption}>
           <input type="text" name="todo" placeholder={'add your todo...'} />
           <button>Dodaj</button>
@@ -92,21 +97,17 @@ class AddOption extends React.Component {
 }
 
 class Options extends React.Component {
-  //   constructor(props) {
-  //     super(props);
-  //     this.handleRemoveAll = this.handleRemoveAll.bind(this);
-  //   }
-
-  //   handleRemoveAll() {
-  //     console.log(this.props.options);
-  //   }
-
   render() {
     return (
       <div>
         Liczba zadań: {this.props.todos.length}
-        {this.props.todos.map(todo => (
-          <Option key={todo} optionText={todo} />
+        {this.props.todos.map((todo) => (
+          <Option 
+          key={todo} 
+          optionText={todo} 
+          handleDeleteTodo={this.props.handleDeleteTodo}
+
+          />
         ))}
         <button
           onClick={this.props.handleDeleteTodos}
@@ -121,7 +122,15 @@ class Options extends React.Component {
 
 class Option extends React.Component {
   render() {
-    return <div> {this.props.optionText}</div>;
+    return <div> 
+    {this.props.optionText}
+    <button 
+    onClick={(e) => {this.props.handleDeleteTodo(this.props.optionText)}}
+    
+    >
+    Usuń
+    </button>
+    </div>;
   }
 }
 
