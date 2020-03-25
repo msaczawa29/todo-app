@@ -28,8 +28,25 @@ class Header extends React.Component {
   }
 }
 class AddOption extends React.Component {
+  handleAddOption(e) {
+    e.preventDefault();
+
+    const todo = e.target.elements.todo.value.trim();
+
+    if (todo) {
+      alert(todo);
+    }
+  }
+
   render() {
-    return <div> Add Option</div>;
+    return (
+      <div>
+        <form onSubmit={this.handleAddOption}>
+          <input type="text" name="todo" placeholder={'add your todo...'} />
+          <button>Dodaj</button>
+        </form>
+      </div>
+    );
   }
 }
 
@@ -41,7 +58,6 @@ class Options extends React.Component {
         {this.props.todos.map(todo => (
           <Option key={todo} optionText={todo} />
         ))}
-        
       </div>
     );
   }
