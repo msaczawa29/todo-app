@@ -39,7 +39,7 @@ body {
     color: rgb(99, 98, 98);
     font-size: 1.5rem;
     font-weight: 500;
-    padding: .4 rem;
+    padding: .8 rem;
   }
 
 
@@ -67,3 +67,18 @@ body {
     margin: 0 auto;
     padding: 0  $m-size;
    }
+
+   .option {
+        display: flex;
+    justify-content: space-between;
+    padding:$l-size $m-size ;
+    
+}
+
+.option__text {
+    color: $dark-blue;
+    font-weight: 500;
+    font-size: 1.6rem;
+    margin:0;
+    word-break: break-all
+}

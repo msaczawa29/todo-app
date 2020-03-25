@@ -106,6 +106,10 @@ class AddOption extends React.Component {
     const error = this.props.handleAddOption(todo);
 
     this.setState(() => ({ error }));
+
+    if (!error) {
+      e.target.elements.todo.value = '';
+    }
   }
 
   render() {
@@ -114,7 +118,7 @@ class AddOption extends React.Component {
         <div>{this.state.error && <p>{this.state.error}</p>}</div>
         <form onSubmit={this.handleAddOption}>
           <input type="text" name="todo" placeholder={'add your todo...'} />
-          <button>Dodaj</button>
+          <button className="button">Dodaj</button>
         </form>
       </div>
     );
@@ -135,6 +139,7 @@ class Options extends React.Component {
           />
         ))}
         <button
+          className="button"
           onClick={this.props.handleDeleteTodos}
           disabled={!this.props.hasTodos}
         >
@@ -148,11 +153,12 @@ class Options extends React.Component {
 class Option extends React.Component {
   render() {
     return (
-      <div>
-        <p>
+      <div className="option">
+        <p className="option__text">
           {this.props.count}. {this.props.optionText}
         </p>
         <button
+          className="button "
           onClick={e => {
             this.props.handleDeleteTodo(this.props.optionText);
           }}
