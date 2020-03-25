@@ -2,16 +2,30 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/styles.scss';
 
-class Todo extends React.Component {
+class TodoApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleDeleteTodos = this.handleDeleteTodos.bind(this);
+    this.state = {
+      todos: ['zadanie','zadanie']
+    };
+  }
+  handleDeleteTodos() {
+    this.setState(() => ({ todos: [] }));
+  }
+
   render() {
     const title = 'Lista zadań:';
-    const todos = ['zadanie 1', 'zadanie 2', 'zadanie 3'];
 
     return (
       <div className="container">
         <Header title={title} />
         <AddOption />
-        <Options todos={todos} />
+        <Options
+          todos={this.state.todos}
+          hasTodos={this.state.todos.length > 0}
+          handleDeleteTodos={this.handleDeleteTodos}
+        />
         <Filter />
       </div>
     );
@@ -51,6 +65,15 @@ class AddOption extends React.Component {
 }
 
 class Options extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.handleRemoveAll = this.handleRemoveAll.bind(this);
+//   }
+
+//   handleRemoveAll() {
+//     console.log(this.props.options);
+//   }
+
   render() {
     return (
       <div>
@@ -58,6 +81,9 @@ class Options extends React.Component {
         {this.props.todos.map(todo => (
           <Option key={todo} optionText={todo} />
         ))}
+        <button onClick={this.props.handleDeleteTodos} disabled={!this.props.hasTodos}>
+          Usuń wszystko
+        </button>
       </div>
     );
   }
@@ -75,4 +101,4 @@ class Filter extends React.Component {
   }
 }
 
-ReactDOM.render(<Todo />, document.querySelector('#root'));
+ReactDOM.render(<TodoApp />, document.querySelector('#root'));
