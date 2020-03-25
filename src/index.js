@@ -6,12 +6,21 @@ class TodoApp extends React.Component {
   constructor(props) {
     super(props);
     this.handleDeleteTodos = this.handleDeleteTodos.bind(this);
+    this.handleAddOption=this.handleAddOption.bind(this)
     this.state = {
-      todos: ['zadanie','zadanie']
+      todos: []
     };
   }
   handleDeleteTodos() {
     this.setState(() => ({ todos: [] }));
+  }
+
+  handleAddOption(todo){
+      this.setState(prevState => {
+          return {
+              todos: prevState.todos.concat(todo)
+          }
+      })
   }
 
   render() {
@@ -20,7 +29,7 @@ class TodoApp extends React.Component {
     return (
       <div className="container">
         <Header title={title} />
-        <AddOption />
+        <AddOption handleAddOption={this.handleAddOption}/>
         <Options
           todos={this.state.todos}
           hasTodos={this.state.todos.length > 0}
@@ -42,13 +51,18 @@ class Header extends React.Component {
   }
 }
 class AddOption extends React.Component {
-  handleAddOption(e) {
+  constructor(props){
+      super(props)
+      this.handleAddOption= this.handleAddOption.bind(this)
+  }
+
+    handleAddOption(e) {
     e.preventDefault();
 
     const todo = e.target.elements.todo.value.trim();
 
     if (todo) {
-      alert(todo);
+      this.props.handleAddOption(todo)
     }
   }
 
