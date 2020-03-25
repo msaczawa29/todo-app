@@ -7,20 +7,41 @@ class TodoApp extends React.Component {
     super(props);
     this.handleDeleteTodos = this.handleDeleteTodos.bind(this);
     this.handleAddOption = this.handleAddOption.bind(this);
-    this.handleDeleteTodo=this.handleDeleteTodo.bind(this)
+    this.handleDeleteTodo = this.handleDeleteTodo.bind(this);
     this.state = {
-      todos: []
+      todos: props.todos
     };
   }
+
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem('todos');
+      const todos = JSON.parse(json);
+
+      if (todos) {
+        this.setState(() => ({ todos }));
+      }
+    } catch (e) {}
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.todos.length !== this.state.todos.length) {
+      const json = JSON.stringify(this.state.todos);
+      localStorage.setItem('todos', json);
+    }
+  }
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+  }
+
   handleDeleteTodos() {
     this.setState(() => ({ todos: [] }));
   }
-  handleDeleteTodo(todoToRemove){
-this.setState((prevState)=>({
-    todos: prevState.todos.filter((todo)=>{
-        return todoToRemove !== todo
-    })
-}))
+  handleDeleteTodo(todoToRemove) {
+    this.setState(prevState => ({
+      todos: prevState.todos.filter(todo => {
+        return todoToRemove !== todo;
+      })
+    }));
   }
 
   handleAddOption(todo) {
@@ -55,6 +76,10 @@ this.setState((prevState)=>({
     );
   }
 }
+
+TodoApp.defaultProps = {
+  todos: []
+};
 
 class Header extends React.Component {
   render() {
@@ -101,12 +126,12 @@ class Options extends React.Component {
     return (
       <div>
         Liczba zadań: {this.props.todos.length}
-        {this.props.todos.map((todo) => (
-          <Option 
-          key={todo} 
-          optionText={todo} 
-          handleDeleteTodo={this.props.handleDeleteTodo}
-
+        {this.props.todos.map((todo, index) => (
+          <Option
+            key={todo}
+            optionText={todo}
+            count={index + 1}
+            handleDeleteTodo={this.props.handleDeleteTodo}
           />
         ))}
         <button
@@ -122,15 +147,20 @@ class Options extends React.Component {
 
 class Option extends React.Component {
   render() {
-    return <div> 
-    {this.props.optionText}
-    <button 
-    onClick={(e) => {this.props.handleDeleteTodo(this.props.optionText)}}
-    
-    >
-    Usuń
-    </button>
-    </div>;
+    return (
+      <div>
+        <p>
+          {this.props.count}. {this.props.optionText}
+        </p>
+        <button
+          onClick={e => {
+            this.props.handleDeleteTodo(this.props.optionText);
+          }}
+        >
+          Usuń
+        </button>
+      </div>
+    );
   }
 }
 
