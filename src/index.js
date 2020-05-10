@@ -9,7 +9,7 @@ class TodoApp extends React.Component {
     this.handleAddOption = this.handleAddOption.bind(this);
     this.handleDeleteTodo = this.handleDeleteTodo.bind(this);
     this.state = {
-      todos: props.todos
+      todos: props.todos,
     };
   }
 
@@ -37,10 +37,10 @@ class TodoApp extends React.Component {
     this.setState(() => ({ todos: [] }));
   }
   handleDeleteTodo(todoToRemove) {
-    this.setState(prevState => ({
-      todos: prevState.todos.filter(todo => {
+    this.setState((prevState) => ({
+      todos: prevState.todos.filter((todo) => {
         return todoToRemove !== todo;
-      })
+      }),
     }));
   }
 
@@ -51,9 +51,9 @@ class TodoApp extends React.Component {
       return 'To zadanie już istnieje';
     }
 
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        todos: prevState.todos.concat(todo)
+        todos: prevState.todos.concat(todo),
       };
     });
   }
@@ -71,14 +71,13 @@ class TodoApp extends React.Component {
           handleDeleteTodos={this.handleDeleteTodos}
           handleDeleteTodo={this.handleDeleteTodo}
         />
-        <Filter />
       </div>
     );
   }
 }
 
 TodoApp.defaultProps = {
-  todos: []
+  todos: [],
 };
 
 class Header extends React.Component {
@@ -95,7 +94,7 @@ class AddOption extends React.Component {
     super(props);
     this.handleAddOption = this.handleAddOption.bind(this);
     this.state = {
-      error: undefined
+      error: undefined,
     };
   }
 
@@ -159,7 +158,7 @@ class Option extends React.Component {
         </p>
         <button
           className="button "
-          onClick={e => {
+          onClick={(e) => {
             this.props.handleDeleteTodo(this.props.optionText);
           }}
         >
@@ -167,12 +166,6 @@ class Option extends React.Component {
         </button>
       </div>
     );
-  }
-}
-
-class Filter extends React.Component {
-  render() {
-    return <div> Filter</div>;
   }
 }
 
